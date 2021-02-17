@@ -1,16 +1,26 @@
 # bluecobrascode
 
-# This code takes pictures so that we can compare the colour to the known temperatures of those parts of the ocean.
+# Our code takes pictures so that we can compare the colour to the known temperatures of those parts of the ocean.
+
+from time import sleep
+
+print(" BLUE COBRA CODE RUNNING!  ")
+print("              ____         ")
+print("             / B B\        ")
+print("             \  ----<      ")
+print("              \  /         ")
+print("    __________/ /          ")
+print(" -=:___________/           ")
+print(" Ethan, James, Todd, Daniel")
+
+sleep(2)
 
 from logzero import logger, logfile
 from ephem import readtle, degree
 from picamera import PiCamera
 from datetime import datetime, timedelta
-from time import sleep
 from pathlib import Path
 import csv
-
-print("Starting up!")
 
 dir_path = Path(__file__).parent.resolve()
 
@@ -74,13 +84,14 @@ def secure_the_moment(camera, picture):
 # get the csv ready
 data_file = dir_path/"data.csv"
 csvmaker(data_file)
+
 # initialise the photo counter and set the start and stop times
 photo_counter = 1
 start_time = datetime.now()
 now_time = datetime.now()
 
 # run a loop for (almost) three hours-ish
-while (now_time < start_time + timedelta(minutes=178)):
+while (now_time < start_time + timedelta(minutes=2)):
     try: # really try python
 
         # get latitude and longitude
@@ -98,7 +109,7 @@ while (now_time < start_time + timedelta(minutes=178)):
         secure_the_moment(phototaker, image_file)
         logger.info(f"iteration {photo_counter}")
         photo_counter += 1
-        sleep(30)
+        sleep(5)
 
         # find what time it is now
         now_time = datetime.now()
