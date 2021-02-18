@@ -57,3 +57,34 @@ Program is 6.7 % Complete
 
 ```
  
+
+### Watchdog Programs
+
+eg. 
+
+```python
+
+
+from sense_hat import SenseHat
+
+sense = SenseHat()
+pressure = sense.get_pressure()
+print("Pressure: %s Millibars" % pressure)
+
+# checks if pressure in ISS is less than 300hPa
+if pressure < 300: 
+
+
+  sense.show_message("DON'T PANIC")
+
+  print(" ")
+  print(" ")
+  print("  _____   ____  _   _ _ _______   _____        _   _ _____ _____   ")
+  print("|  __ \ / __ \| \ | ( )__   __| |  __ \ /\   | \ | |_   _/ ____|   ")
+  print(" | |  | | |  | |  \| |/   | |    | |__) /  \  |  \| | | || |       ")
+  print(" | |  | | |  | | . ` |    | |    |  ___/ /\ \ | . ` | | || |       ")
+  print(" | |__| | |__| | |\  |    | |    | |  / ____ \| |\  |_| || |____   ")
+  print(" |_____/ \____/|_| \_|    |_|    |_| /_/    \_\_| \_|_____\_____|  ")
+  print("                                                                   ")
+                                                                 
+  print("Space is 99.99% vacuum. If anything, THIS is far more normal by the standards of the universe")
