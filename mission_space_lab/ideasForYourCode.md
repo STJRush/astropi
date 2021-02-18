@@ -89,7 +89,7 @@ if pressure < 300:
                                                                  
   print("Space is 99.99% vacuum. If anything, THIS is far more normal by the standards of the universe.")
   
-  
+```  
   
 ## Sense Hat Logo Animations
   
