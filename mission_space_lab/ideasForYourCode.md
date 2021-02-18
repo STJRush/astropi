@@ -60,7 +60,7 @@ Program is 6.7 % Complete
 
 ### Watchdog Programs
 
-eg. 
+eg. This program that shows the ISS crew a banner if there's a major incident and they're all exposed to the vacuum of space.
 
 ```python
 
