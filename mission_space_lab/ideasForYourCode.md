@@ -95,7 +95,7 @@ if pressure < 300:
   
 ```python
 
-  from sense_hat import SenseHat
+from sense_hat import SenseHat
 import time
 
 s = SenseHat()
