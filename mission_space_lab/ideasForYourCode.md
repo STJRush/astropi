@@ -91,9 +91,10 @@ if pressure < 300:
   
   
   
-  ## Sense Hat Logo Animations
+## Sense Hat Logo Animations
   
-  ```python
+```python
+
   from sense_hat import SenseHat
 import time
 
@@ -193,6 +194,7 @@ while True:
     s.set_pixels(images[count % len(images)]())
     time.sleep(.75)
     count += 1
-  ```
+    
+```
   
   
