@@ -1,11 +1,28 @@
-#Cloud Atlas -- Daniel and Jordan
+# Cloud Atlas -- Daniel and Jordan
+# For measuring cloud Albedo
+# Target: Clouds!
+
+
+# prints logo
+
+print("")
+print("")
+print("         .-~~~-. ")
+print("  .- ~ ~-(       )_ _   ")
+print(" /                     ~ -.   ")
+print("|     CLOUD ATLAS          \  ")
+print(" \                         .'   ")
+print("  ~- . _____________ . -~   ")
+print("")
+print("I believe there is another world waiting for us. ")
+
+
+
 from logzero import logger, logfile
-#from sense_hat import SenseHat
 from ephem import readtle, degree
-#from picamera import PiCamera
+from picamera import PiCamera
 from datetime import datetime, timedelta
 from time import sleep
-#import random
 from pathlib import Path
 import csv
 
@@ -17,6 +34,7 @@ logfile(dir_path/"cloud-atlas.log")
 # I am here!
 name = "ISS (ZARYA)"
 
+# ephem data from NORAD
 line1 = "1 25544U 98067A   21039.89161926 -.00000043  00000-0  73771-5 0  9995"
 
 line2 = "2 25544  51.6440 257.2891 0002486 351.4127  16.5936 15.48938694268710"
@@ -25,13 +43,23 @@ iss = readtle(name, line1, line2)
 
 # Mum, get the camera 
 photocapture= PiCamera()
-photocapture.resolution = (1296, 972)
+#photocapture.resolution = (1296, 972)
+
+
+def get_latlon():
+    """Return our location, through Latiude-Longitude format, in Degrees"""
+    iss.compute() # Get the lat/long values from ephem
+    return (iss.sublat / degree, iss.sublong / degree)
+
+
+
+# CSVS
 
 def filecreate(space_scrolls):
     """Create a new datasheet for the details,  and add the first part, the header row"""
     with open(space_scrolls, 'w') as f:
         writer = csv.writer(f)
-        header = ("Date/time")
+        header = ("Date/time", "Picture", "Lat", "Long")
         writer.writerow(header)
 
 def add_csv_data(space_scrolls, data):
@@ -40,11 +68,8 @@ def add_csv_data(space_scrolls, data):
         writer = csv.writer(f)
         writer.writerow(data)
         
-        
-def get_latlon():
-    """Return our location, through Latiude-Longitude format, in Degrees"""
-    iss.compute() # Get the lat/long values from ephem
-    return (iss.sublat / degree, iss.sublong / degree)
+
+
 
 def convert(angle):
     """
@@ -72,16 +97,22 @@ def capture(camera, image):
     camera.capture(image)
 
 
-# initialise the CSV file
-space_scrolls = dir_path/"data.csv"
-filecreate(space_scrolls)
+
 # initialise the photo counter
 photo_counter = 1
+
+
+# initialise the CSV file
+space_scrolls = dir_path/"cloudAtlasData.csv"
+filecreate(space_scrolls)
+
 # record the start and current time
 start_time = datetime.now()
 now_time = datetime.now()
-# run a loop for (almost) three hours
-while (now_time < start_time + timedelta(minutes=178)):
+
+
+# run for three hours
+while (now_time < start_time + timedelta(minutes=2)):
     try:
         # get latitude and longitude
         latitude, longitude = get_latlon()
@@ -93,13 +124,30 @@ while (now_time < start_time + timedelta(minutes=178)):
             longitude
         )
         add_csv_data(space_scrolls, data)
+        
+        # print("Taking a photo now")
+        
+        
+        
         # capture image
         our_pic = f"{dir_path}/photo_{photo_counter:03d}.jpg"
         capture(photocapture, our_pic)
         logger.info(f"iteration {photo_counter}")
         photo_counter += 1
-        sleep(30)
+        
+        
+        # reports to the iss crew that program is working (every 5th go)
+        if photo_counter % 5 == 0:
+            print("It's working! Keep going little program")
+               
+        sleep(4)
         # update the current time, right now!!
         now_time = datetime.now()
+        
     except Exception as e:
         logger.error('{}: {})'.format(e.__class__.__name__, e))
+        
+print("Finished!")
+
+print("Daniel's Message to the crew: I'm sending a huge wave to you folks up there at the moment! Back here on earth we find ourselves ina somewhat more comparable situation - our everyday world and space seems to have shrunk and has become a little more confined, being at home a lot more than usual, and having to come up with new ideas and inventions to keep everyday life on the straight and flat. Its always been factthat of course the ISS is a place where you live with obvious limitations of where you can go and confinement is clear, but at the moment it does seem that there is a degree of freedom and 'out there' nature when I think of you astronauts hundreds of kilometres above from where I am standing!")
+
