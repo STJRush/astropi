@@ -34,16 +34,17 @@ logfile(dir_path/"cloud-atlas.log")
 # I am here!
 name = "ISS (ZARYA)"
 
-# ephem data from NORAD
-line1 = "1 25544U 98067A   21039.89161926 -.00000043  00000-0  73771-5 0  9995"
+# ephem data from NORAD 19/02/21
 
-line2 = "2 25544  51.6440 257.2891 0002486 351.4127  16.5936 15.48938694268710"
+name = "ISS (ZARYA)"
+line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
+line2 = "2 25544  51.6441 205.5251 0003032  33.1814  49.2099 15.48980511270331"
 
 iss = readtle(name, line1, line2)
 
 # Mum, get the camera 
 photocapture= PiCamera()
-#photocapture.resolution = (1296, 972)
+photocapture.resolution = (1296, 972)
 
 
 def get_latlon():
@@ -112,7 +113,7 @@ now_time = datetime.now()
 
 
 # run for three hours
-while (now_time < start_time + timedelta(minutes=2)):
+while (now_time < start_time + timedelta(minutes=176)):
     try:
         # get latitude and longitude
         latitude, longitude = get_latlon()
@@ -140,7 +141,7 @@ while (now_time < start_time + timedelta(minutes=2)):
         if photo_counter % 5 == 0:
             print("It's working! Keep going little program")
                
-        sleep(4)
+        sleep(30)
         # update the current time, right now!!
         now_time = datetime.now()
         
