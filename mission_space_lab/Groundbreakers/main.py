@@ -1,4 +1,6 @@
-#ground-breakers code
+# ground-breakers code
+# Our target is both sea and land areas
+
 
 from logzero import logger, logfile
 from ephem import readtle, degree
@@ -8,10 +10,11 @@ from time import sleep
 from pathlib import Path
 import csv
 
-dir_path = Path(__file__).parent.resolve()
+# We'd also like to measure Temperature and Humidity in the ISS just because why not
+from sense_hat import SenseHat
 
-# the title of my log :)
-logfile(dir_path/"groundbreakers.log")
+# sets up sense hat
+sh = SenseHat()
 
 # bassically a find my spacestation app 
 name = "ISS (ZARYA)"
@@ -20,15 +23,23 @@ line2 = "2 25544  51.6454 339.9628 0001882  94.8340 265.2864 15.49409479254842"
 spaceyMacStationGuy = readtle(name, line1, line2)
 
 
+
+# the title of my log and the path for stuff :)
+dir_path = Path(__file__).parent.resolve()
+logfile(dir_path/"groundbreakers.log")
+
+
+
+
 # getting the perfect camera angles
 pictionary = PiCamera()
-pictionary.resolution = (1296, 972)
+#pictionary.resolution = (1296, 972)
 
 def producerofCSV(doc_ment):
-    """"""
+    """Produces a Fine CSV of the Highest Quality"""
     with open(doc_ment, 'w') as f:
         writer = csv.writer(f)
-        header = ("Date/time", "Temperature", "Humidity")
+        header = ("DataTime","DataPoint","Humidity","Temperature","latitude","longitude","Acceleration","CompassRaw", "Compass")
         writer.writerow(header)
 
 def gimmemoreDATA (data_file, data):
@@ -42,70 +53,61 @@ def getthatLATLON():
     spaceyMacStationGuy.compute() # Get the lat/long values from ephem
     return (spaceyMacStationGuy.sublat / degree, spaceyMacStationGuy.sublong / degree)
 
-def change it(angle):
-    """
-    Convert an ephem angle (degrees, minutes, seconds) to
-    an EXIF-appropriate representation (rationals)
-    e.g. '51:35:19.7' to '51/1,35/1,197/10'
-    Return a tuple containing a boolean and the converted angle,
-    with the boolean indicating if the angle is negative.
-    """
-    degrees, minutes, seconds = (float(field) for field in str(angle).split(":"))
-    exif_angle = f'{abs(degrees):.0f}/1,{minutes:.0f}/1,{seconds*10:.0f}/10'
-    return degrees < 0, exif_angle
 
 def capture(camera, image):
     """Use `camera` to capture an `image` file with lat/long & time  data."""
     spaceyMacStationGuy.compute() # Get the lat/long values from ephem
-
-    # convert the latitude and longitude to EXIF-appropriate representations
-    south, exif_latitude = change it(spaceyMacStationGuy.sublat)
-    west, exif_longitude = change it(spaceyMacStationGuy.sublong)
-
-    # set the EXIF tags specifying the current location
-    camera.exif_tags['GPS.GPSLatitude'] = exif_latitude
-    camera.exif_tags['GPS.GPSLatitudeRef'] = "S" if south else "N"
-    camera.exif_tags['GPS.GPSLongitude'] = exif_longitude
-    camera.exif_tags['GPS.GPSLongitudeRef'] = "W" if west else "E"
-
     # capture the image
     camera.capture(image)
 
 
 # initialise the CSV file
-data_file = dir_path/"data.csv"
+data_file = dir_path/"groundBreakers_data.csv"
 producerofCSV(data_file)
-# initialise the photo counter
-photo_counter = 1
+
+
+# start the photo and data counter
+dataCounter = 1
+
 # record the start and current time
 start_time = datetime.now()
 now_time = datetime.now()
-# run a loop for (almost) three hours
-while (now_time < start_time + timedelta(minutes=178)):
+
+# run the main loop
+while (now_time < start_time + timedelta(minutes=0.3)):
     try:
+        
+        #get A BUNCH of sensor data
+        
         humidity = round(sh.humidity, 4)
         temperature = round(sh.temperature, 4)
+        pressure = round(sh.pressure, 4)
+
+        sleep(1)
+        compass = (sh.compass)
+        compassRAW = (sh.compass_raw)
+        acceleration = (sh.accelerometer_raw)
+        
         # get latitude and longitude
         latitude, longitude = getthatLATLON()
         # Save the data to the file
         data = (
-            datetime.now(),
-            photo_counter,
-            humidity,
-            temperature,
-            latitude,
-            longitude
+            datetime.now(),dataCounter,humidity,temperature,latitude,longitude,acceleration,compass, compassRAW
         )
+        
         gimmemoreDATA(data_file, data)
         # capture image
-        image_file = f"{dir_path}/photo_{photo_counter:03d}.jpg"
+        image_file = f"{dir_path}/photo_{dataCounter:03d}.jpg"
         capture(pictionary, image_file)
-        logger.info(f"iteration {photo_counter}")
-        photo_counter += 1
-        sleep(30)
+        logger.info(f"iteration {dataCounter}")
+        dataCounter += 1
+        sleep(3)
         # update the current time
         now_time = datetime.now()
+        
+        
     except Exception as e:
         logger.error('{}: {})'.format(e.__class__.__name__, e))
         
-        
+print("All done") 
+
