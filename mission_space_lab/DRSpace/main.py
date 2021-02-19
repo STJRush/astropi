@@ -45,7 +45,7 @@ station = readtle(name, line1, line2)
 
 # Set up camera
 phototaker = PiCamera()
-phototaker.resolution = (1296, 972)
+phototaker.resolution = (2592, 1944) 
 
 
 # creates and adds things to CSV files
@@ -78,7 +78,7 @@ def angleconversion(angle):
 converts angles so we can use EXIF
     """
     degrees, minutes, seconds = (float(field)
-                                 for field in str(angle).split(":"))
+    for field in str(angle).split(":"))
     exif_angle = f'{abs(degrees):.0f}/1,{minutes:.0f}/1,{seconds*10:.0f}/10'
     return degrees < 0, exif_angle
 
@@ -117,7 +117,7 @@ newcsv(data_file)
 pictureNumber = 1
 
 # run a loop for (almost) three hours
-while (time_right_now < time_we_started + (timedelta(minutes=178))):
+while (time_right_now < time_we_started + (timedelta(minutes=176))):
     try:
 
         # first get the position
@@ -144,7 +144,7 @@ while (time_right_now < time_we_started + (timedelta(minutes=178))):
         pictureNumber += 1
         
         # wait between photos
-        sleep(30)
+        sleep(15)
         
         
         # change the time to the current time
