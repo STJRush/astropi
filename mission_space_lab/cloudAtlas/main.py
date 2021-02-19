@@ -44,7 +44,7 @@ iss = readtle(name, line1, line2)
 
 # Mum, get the camera 
 photocapture= PiCamera()
-photocapture.resolution = (1296, 972)
+photocapture.resolution = (2592, 1944)
 
 
 def get_latlon():
@@ -141,7 +141,7 @@ while (now_time < start_time + timedelta(minutes=176)):
         if photo_counter % 5 == 0:
             print("It's working! Keep going little program")
                
-        sleep(30)
+        sleep(15)
         # update the current time, right now!!
         now_time = datetime.now()
         
