@@ -25,7 +25,7 @@ iss = readtle(name, line1, line2)
 
 # Set up planet selfie stick
 cam = PiCamera()
-#cam.resolution = (1296, 972)
+cam.resolution = (2592, 1944)
 
 def create_csv_file(data_file):
     """Create a new CSV file and add the header row"""
@@ -65,7 +65,7 @@ start_time = datetime.now()
 now_time = datetime.now()
 
 # run a loop for (almost) three hours
-while (now_time < start_time + timedelta(minutes=0.2)):
+while (now_time < start_time + timedelta(minutes=178)):
     try:
 
         # get latitude and longitude
@@ -83,7 +83,7 @@ while (now_time < start_time + timedelta(minutes=0.2)):
         capture(cam, image_file)
         logger.info(f"iteration {photo_counter}")
         photo_counter += 1
-        sleep(2)
+        sleep(14)
         # what time is it
         now_time = datetime.now()
         
