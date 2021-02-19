@@ -32,10 +32,14 @@ phototaker.resolution = (1296, 972)
 logfile(dir_path/"bluecobras.log")
 
 # This is where i am 
+# updated from http://www.celestrak.com/NORAD/elements/stations.txt on 19/02/21
+
 name = "ISS (ZARYA)"
-line1 = "1 25544U 98067A   21039.89161926 -.00000043  00000-0  73771-5 0  9995"
-line2 = "2 25544  51.6440 257.2891 0002486 351.4127  16.5936 15.48938694268710"
+line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
+line2 = "2 25544  51.6441 205.5251 0003032  33.1814  49.2099 15.48980511270331"
 spaceportLocation = readtle(name, line1, line2)
+
+
 
 
 # List of functions used by the program
