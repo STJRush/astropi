@@ -35,15 +35,17 @@ dir_path = Path(__file__).parent.resolve()
 logfile(dir_path / "drspace.log")
 
 # Where is the ISS
+# updated from http://www.celestrak.com/NORAD/elements/stations.txt on 19/02/21
+
 name = "ISS (ZARYA)"
-line1 = "1 25544U 98067A   20316.41516162  .00001589  00000+0  36499-4 0  9995"
-line2 = "2 25544  51.6454 339.9628 0001882  94.8340 265.2864 15.49409479254842"
+line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
+line2 = "2 25544  51.6441 205.5251 0003032  33.1814  49.2099 15.48980511270331"
 station = readtle(name, line1, line2)
 
 
 # Set up camera
 phototaker = PiCamera()
-#phototaker.resolution = (1296, 972)
+phototaker.resolution = (1296, 972)
 
 
 # creates and adds things to CSV files
@@ -52,7 +54,7 @@ def newcsv(fileddata):
     """New CSV file"""
     with open(fileddata, 'w') as f:
         writer = csv.writer(f)
-        header = ("Date/time", "Temperature", "Humidity")
+        header = ("Date/time", "Pic", "Lat", "Long")
         writer.writerow(header)
 
 
@@ -115,7 +117,7 @@ newcsv(data_file)
 pictureNumber = 1
 
 # run a loop for (almost) three hours
-while (time_right_now < time_we_started + (timedelta(minutes=2))):
+while (time_right_now < time_we_started + (timedelta(minutes=178))):
     try:
 
         # first get the position
@@ -141,8 +143,8 @@ while (time_right_now < time_we_started + (timedelta(minutes=2))):
         # count up the pics
         pictureNumber += 1
         
-        
-        sleep(4)
+        # wait between photos
+        sleep(30)
         
         
         # change the time to the current time
