@@ -13,8 +13,9 @@ import csv
 
 # Find that ISS
 name = "ISS (ZARYA)"
-line1 = "1 25544U 98067A   20316.41516162  .00001589  00000+0  36499-4 0  9995"
-line2 = "2 25544  51.6454 339.9628 0001882  94.8340 265.2864 15.49409479254842"
+line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
+line2 = "2 25544  51.6441 205.5251 0003032  33.1814  49.2099 15.48980511270331"
+
 iss = readtle(name, line1, line2)
 
 
@@ -26,7 +27,7 @@ logfile(dir_path / "Teamerosion.log")
 
 # Set up camera
 photomachine = PiCamera()
-#photomachine.resolution = (1296, 972)
+photomachine.resolution = (2592, 1944)
 
 
 def aWildCSVAppears(data_file):
@@ -93,7 +94,7 @@ start_time = datetime.now()
 now_time = datetime.now()
 
 # run a loop for less than 180 minutes
-while (now_time < start_time + timedelta(minutes=0.3)):
+while (now_time < start_time + timedelta(minutes=178)):
     
     
     # "do or do not, there is no try" - Master yoda (never used python)
@@ -110,7 +111,7 @@ while (now_time < start_time + timedelta(minutes=0.3)):
         
         logger.info(f" Stay on target! We're on point {photo_counter}")
         photo_counter += 1
-        sleep(2)
+        sleep(15)
         # update the current time
         now_time = datetime.now()
         
