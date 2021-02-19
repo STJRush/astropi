@@ -17,7 +17,7 @@ from sense_hat import SenseHat
 sh = SenseHat()
 
 # bassically a find my spacestation app 
-# updated 19/02/21
+# updated this code on 19/02/21
 
 name = "ISS (ZARYA)"
 line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
@@ -35,7 +35,7 @@ logfile(dir_path/"groundbreakers.log")
 
 # getting the perfect camera angles
 pictionary = PiCamera()
-#pictionary.resolution = (1296, 972)
+pictionary.resolution = (2592, 1944)
 
 def producerofCSV(doc_ment):
     """Produces a Fine CSV of the Highest Quality"""
@@ -76,7 +76,7 @@ start_time = datetime.now()
 now_time = datetime.now()
 
 # run the main loop
-while (now_time < start_time + timedelta(minutes=150)):
+while (now_time < start_time + timedelta(minutes=170)):
     try:
         
         #get A BUNCH of sensor data
@@ -103,7 +103,7 @@ while (now_time < start_time + timedelta(minutes=150)):
         capture(pictionary, image_file)
         logger.info(f"iteration {dataCounter}")
         dataCounter += 1
-        sleep(30)
+        sleep(15)
         # update the current time
         now_time = datetime.now()
         
