@@ -26,7 +26,7 @@ dir_path = Path(__file__).parent.resolve()
 
 # Lights Camera Action
 phototaker = PiCamera()
-phototaker.resolution = (1296, 972)
+phototaker.resolution = (2592, 1944)  # Max Res, fewer photos
 
 # Broken Snakes Log
 logfile(dir_path/"bluecobras.log")
@@ -95,7 +95,7 @@ start_time = datetime.now()
 now_time = datetime.now()
 
 # run a loop for (almost) three hours-ish
-while (now_time < start_time + timedelta(minutes=178)):
+while (now_time < start_time + timedelta(minutes=177)):
     try: # really try python
 
         # get latitude and longitude
@@ -113,7 +113,7 @@ while (now_time < start_time + timedelta(minutes=178)):
         secure_the_moment(phototaker, image_file)
         logger.info(f"iteration {photo_counter}")
         photo_counter += 1
-        sleep(30)
+        sleep(15)
 
         # find what time it is now
         now_time = datetime.now()
