@@ -95,7 +95,7 @@ start_time = datetime.now()
 now_time = datetime.now()
 
 # run a loop for (almost) three hours-ish
-while (now_time < start_time + timedelta(minutes=2)):
+while (now_time < start_time + timedelta(minutes=178)):
     try: # really try python
 
         # get latitude and longitude
@@ -113,7 +113,7 @@ while (now_time < start_time + timedelta(minutes=2)):
         secure_the_moment(phototaker, image_file)
         logger.info(f"iteration {photo_counter}")
         photo_counter += 1
-        sleep(5)
+        sleep(30)
 
         # find what time it is now
         now_time = datetime.now()
