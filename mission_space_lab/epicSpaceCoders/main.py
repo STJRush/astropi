@@ -21,14 +21,14 @@ logfile(dir_path/"EpicSpaceCoders.log")
 
 # find the place
 name = "ISS (ZARYA)"
-line1 = "1 25544U 98067A   21039.89161926 -.00000043  00000-0  73771-5 0  9995 2 25544  51.6440 257.2891 0002486 351.4127  16.5936 15.48938694268710 "
-line2 = "2 25544  51.6454 339.9628 0001882  94.8340 265.2864 15.49409479254842"
+line1 = "1 25544U 98067A   21050.35666428  .00001943  00000-0  43448-4 0  9992"
+line2 = "2 25544  51.6441 205.5251 0003032  33.1814  49.2099 15.48980511270331"
 adorablespacestation = readtle(name, line1, line2)
 
 
 # Enable camera
 picturetaker = PiCamera()
-#picturetaker.resolution = (1296, 972)
+picturetaker.resolution = (2592, 1944)
 
 def csvmaker(fileofdata):
     """make the new csv"""
@@ -69,7 +69,7 @@ now_time = datetime.now()
 
 
 
-while (now_time < start_time + timedelta(minutes=1)):
+while (now_time < start_time + timedelta(minutes=178)):
     try:
                
         
@@ -121,7 +121,7 @@ while (now_time < start_time + timedelta(minutes=1)):
         # count them photos
         photoAndDataCounter += 1
         
-        sleep(2)
+        sleep(15)
         
         # change the time to the current time
         now_time = datetime.now()
