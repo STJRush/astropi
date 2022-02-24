@@ -14,6 +14,29 @@
 
 # if you havent noticed we are big fans of the band Big Time Rush i suggest some of their songs.
 
+# Test 1: Ran for 352 iterations, took 3 hrs 27 mins, will reduce time. Try set to 140mins next time.
+# File size was only 196MB so can probably increase the quality a fair bit for the next test.
+# Most file sizes for photos were about 400 dark to 600 light.
+
+# Test 2
+# Set to full res but less frequent to save space
+# Times set to 140 and 60, ran for 139 minutes taking 137 images each about 5MB each
+# Total space used was 700MB. 
+
+# Test 3
+# Keeping on full res and reducing the 60 to 15 for 4x number of images and time to 150
+# This should be close to the 3GB and can scale it back from there in the final test
+# RESULT: Did 565 iterations and photos. Totals size was 800MB but most of this was because of the blackness, low light
+# Ran from 2344 to 0214 so 2 hours 30 mins.
+
+# Test 4
+# Setting time to 160mins now. Keeping the interval at 15 seconds. Prediction is a total file
+# size of 3051 but that's in full daylight with no smaller size night photos.
+# RESULT: Ran to iteration 554 but ran out of space as we didn't empty the bin. Total size was 3.3GB
+# Will reduce the frequency to 20 sec instead of 15 and try again.
+
+# Test 5: 2.6GB ALL BRIGHT DAY TIME PHOTOS. So with dark photos that will be much less than 3GB.
+# 2 hours 40 mins so well under the 3 hour limit. 466 iterations in total. That's it, ready to fly!
 
 
 from pathlib import Path
@@ -24,6 +47,7 @@ from orbit import ISS
 from time import sleep
 from datetime import datetime, timedelta
 import csv
+
 """our programe is going to take """
 def make_big_csv(info_file):
     """make a spread sheet for the data in the future"""
@@ -63,14 +87,14 @@ def capture(camera, image):
 base_folder = Path(__file__).parent.resolve()
 
 
-logfile(base_folder/"events.diary")
+logfile(base_folder/"events.log")
 
 
 sense = SenseHat()
 
 
 cam = PiCamera()
-cam.resolution = (1296, 972)
+cam.resolution = (4056, 3040) # first test was 1296, 972
 
 
 info_file = base_folder/"data.csv"
@@ -82,7 +106,7 @@ number_count = 1
 start_time = datetime.now()
 now_time = datetime.now()
 
-while (now_time < start_time + timedelta(minutes=178)):
+while (now_time < start_time + timedelta(minutes=160)): # default 178min
     try:
         humidity = round(sense.humidity, 4)
         temperature = round(sense.temperature, 4)
@@ -102,9 +126,9 @@ while (now_time < start_time + timedelta(minutes=178)):
         image_file = f"{base_folder}/photo_{number_count:03d}.jpg"
         capture(cam, image_file)
       
-        logger.info(f"iteration {number_count}")
+        logger.info(f"My iteration count is {number_count} out of about 466")
         number_count += 1
-        sleep(60)
+        sleep(20) #default 30 seconds
         
         now_time = datetime.now()
     except Exception as e:
@@ -124,4 +148,5 @@ while (now_time < start_time + timedelta(minutes=178)):
 # Rory's message:
 #Thank you for bringing me into this life. This message is now up in Space which is extremely cool. Thank you again for everything.
     
+
 
