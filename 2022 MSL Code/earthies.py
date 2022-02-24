@@ -1,3 +1,5 @@
+# Team Earthies!
+
 from pathlib import Path
 from logzero import logger, logfile
 from sense_hat import SenseHat
@@ -6,13 +8,18 @@ from orbit import ISS
 from time import sleep
 from datetime import datetime, timedelta
 import csv
+
 """
 our prgram will take a scattergun array of images, these will be processed back on Earth
 by Eabha Mc Bride and Leah Mullen
 hoping our grandparents, parents and leahs dog will be proud of us and that this will reach the space station
 also thank you so much for this amazing oppertunity (shoutout to Mr Murray!!! thank you!)
 and thank you to my group for helping fix this code for an hour and screaming when we did it!
-:) 
+:)
+
+TESTING: This program ran fine for just less 3 hours and went for 466 iterations.
+We were under the 3GB limit and that was with all bright daytime photos. We're go for launch!
+
 """
 def make_file_for_csv(file_of_data):
     """Add top row to newly created CSV file"""
@@ -56,14 +63,14 @@ def capture(camera, image):
 base_folder = Path(__file__).parent.resolve()
 
 # Set a logfile name
-logfile(base_folder/"happenings.log")
+logfile(base_folder/"eventlogger.log")
 
 # Set up Sense Hat
 sense = SenseHat()
 
 # Set up camera
 cam = PiCamera()
-cam.resolution = (1296, 972)
+cam.resolution = (4056, 3040) # FULL RES (it's cool, testing showed less than 3GB in total)
 
 # Initialise the CSV file
 file_of_data = base_folder/"data.csv"
@@ -75,7 +82,7 @@ Cool_counter = 1
 start_time = datetime.now()
 now_time = datetime.now()
 # Run a loop for (almost) three hours
-while (now_time < start_time + timedelta(minutes=178)):
+while (now_time < start_time + timedelta(minutes=1)):
     try:
         humidity = round(sense.humidity, 4)
         temperature = round(sense.temperature, 4)
@@ -95,10 +102,11 @@ while (now_time < start_time + timedelta(minutes=178)):
         image_file = f"{base_folder}/photo_{Cool_counter:03d}.jpg"
         capture(cam, image_file)
         # Log event
-        logger.info(f"iteration {Cool_counter}")
+        logger.info(f"We're at photo {Cool_counter} of about 466ish.")
         Cool_counter += 1
-        sleep(30)
+        sleep(2)
         # Update the current time
         now_time = datetime.now()
     except Exception as e:
         logger.error(f'{e.__class__.__name__}: {e}')
+
