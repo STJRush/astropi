@@ -82,7 +82,7 @@ Cool_counter = 1
 start_time = datetime.now()
 now_time = datetime.now()
 # Run a loop for (almost) three hours
-while (now_time < start_time + timedelta(minutes=1)):
+while (now_time < start_time + timedelta(minutes=160)):
     try:
         humidity = round(sense.humidity, 4)
         temperature = round(sense.temperature, 4)
@@ -104,7 +104,7 @@ while (now_time < start_time + timedelta(minutes=1)):
         # Log event
         logger.info(f"We're at photo {Cool_counter} of about 466ish.")
         Cool_counter += 1
-        sleep(2)
+        sleep(20)
         # Update the current time
         now_time = datetime.now()
     except Exception as e:
