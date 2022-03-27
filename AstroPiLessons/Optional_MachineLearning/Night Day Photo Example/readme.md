@@ -1,1 +1,0 @@
-https://projects.raspberrypi.org/en/projects/image-id-coral
