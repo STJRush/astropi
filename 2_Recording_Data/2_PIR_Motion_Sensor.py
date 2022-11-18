@@ -1,3 +1,5 @@
+# Tutorial at https://projects.raspberrypi.org/en/projects/physical-computing/11
+
 from gpiozero import MotionSensor
 
 pir = MotionSensor(12) # out plugged into GPIO12
