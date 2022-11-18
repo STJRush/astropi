@@ -2,7 +2,9 @@
 
 from gpiozero import MotionSensor
 
-pir = MotionSensor(12) # out plugged into GPIO12
+pir = MotionSensor(12) # OUT plugged into GPIO12
+                       # GND plugged into ground
+                       # VCC plugged into 5V
 
 while True:
     print("Continue scanning for humans...")
